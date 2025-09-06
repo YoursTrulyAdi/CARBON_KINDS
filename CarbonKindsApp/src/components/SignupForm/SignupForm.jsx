@@ -1,94 +1,152 @@
+// src/components/SignupForm/SignupForm.jsx
 import React, { useState } from "react";
 import styled from "styled-components";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useNavigate } from "react-router-dom";
 
-const FormContainer = styled.div`
-  background-color: #F7F1E1;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  max-width: 400px;
-  width: 100%;
-`;
-
-const Title = styled.h2`
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #66371B;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 0.8rem 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid #81754B;
-  border-radius: 6px;
-  font-size: 1rem;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 0.8rem 1rem;
-  background-color: #B4833D;
-  color: #F7F1E1;
-  border: none;
-  border-radius: 6px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.3s;
-
-  &:hover {
-    background-color: #a06e2f;
-  }
-`;
-
-const ErrorMessage = styled.p`
-  color: red;
-  margin-bottom: 0.8rem;
-`;
-
 const SignupForm = () => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/login"); // redirect to login after signup
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  e.preventDefault();
+  setError("");
+  try {
+    // Create the user
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+    // Wait for Firebase to set displayName
+    await updateProfile(auth.currentUser, {
+      displayName: username,
+    });
+
+    // Force reload user to sync the displayName in context
+    await auth.currentUser.reload();
+
+    navigate("/dashboard"); 
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
 
   return (
-    <FormContainer>
-      <Title>Create Your Account</Title>
-      <form onSubmit={handleSubmit}>
-        <Input
+    <Wrapper>
+      <form className="form_container" onSubmit={handleSubmit}>
+        <h2 className="title">Create Account</h2>
+        <p className="subtitle">Sign up and start your sustainable journey.</p>
+
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+        <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <Input
+        <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        <Button type="submit">Sign Up</Button>
+
+        {error && <p className="error">{error}</p>}
+
+        <button type="submit" className="btn">
+          Sign Up
+        </button>
+
+        <p className="note">
+          Already have an account? <a href="/login">Login</a>
+        </p>
       </form>
-    </FormContainer>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f7f1e1;
+
+  .form_container {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #66371b;
+    text-align: center;
+    margin: 0;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    color: #81754b;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  input {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #e3d8c1;
+    outline: none;
+    font-size: 1rem;
+  }
+
+  input:focus {
+    border-color: #b4833d;
+  }
+
+  .btn {
+    background: #b4833d;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .note {
+    font-size: 0.85rem;
+    text-align: center;
+    color: #81754b;
+    a {
+      color: #66371b;
+      font-weight: 600;
+      text-decoration: none;
+    }
+  }
+
+  .error {
+    color: red;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+`;
 
 export default SignupForm;

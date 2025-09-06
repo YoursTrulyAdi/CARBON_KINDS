@@ -1,31 +1,28 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+// src/components/LoginForm/LoginForm.jsx
+import React, { useState } from "react";
+import styled from "styled-components";
+import { auth, googleProvider } from "../../firebase";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { auth, googleProvider } from "../../firebase"; // Only once
-
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");       
-  const [password, setPassword] = useState(""); 
-  const [error, setError] = useState("");       
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // Email/password login
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/");
+      navigate("/"); // Redirect to home
     } catch (err) {
       setError(err.message);
     }
   };
 
-  // Google login
-  const handleGoogleSignIn = async () => {
-    setError("");
+  const handleGoogleLogin = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
       navigate("/");
@@ -35,93 +32,129 @@ const LoginForm = () => {
   };
 
   return (
-    <StyledWrapper>
+    <Wrapper>
       <form className="form_container" onSubmit={handleSubmit}>
-        <div className="logo_container">
-          <span className="logo_text">EcoFinds</span>
-        </div>
-        <div className="title_container">
-          <p className="title">Welcome Back</p>
-          <span className="subtitle">
-            Log in to continue your sustainable journey.
-          </span>
-        </div>
-        <br />
-        <div className="input_container">
-          <label className="input_label" htmlFor="email_field">Email</label>
-          <input
-            placeholder="name@mail.com"
-            type="email"
-            id="email_field"
-            className="input_field"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div className="input_container">
-          <label className="input_label" htmlFor="password_field">Password</label>
-          <input
-            placeholder="Password"
-            type="password"
-            id="password_field"
-            className="input_field"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+        <h2 className="title">Welcome Back</h2>
+        <p className="subtitle">Log in to continue your sustainable journey.</p>
 
-        {error && <p style={{ color: "red", marginBottom: "10px" }}>{error}</p>}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-        <button type="submit" className="sign-in_btn">Sign In</button>
+        {error && <p className="error">{error}</p>}
 
-        <div className="separator">
-          <hr className="line" />
-          <span>Or</span>
-          <hr className="line" />
-        </div>
+        <button type="submit" className="btn">
+          Sign In
+        </button>
 
-        <button
-          type="button"
-          className="sign-in_ggl"
-          onClick={handleGoogleSignIn}
-        >
-          <span>Sign In with Google</span>
+        <div className="separator">Or</div>
+
+        <button type="button" className="btn google" onClick={handleGoogleLogin}>
+          Sign In with Google
         </button>
 
         <p className="note">
-          No account? <a href="/signup">Sign up for free!</a>
+          No account? <a href="/signup">Sign up here</a>
         </p>
       </form>
-    </StyledWrapper>
+    </Wrapper>
   );
 };
 
-// --- STYLES (unchanged) ---
-const StyledWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f7f1e1;
+  background: #f7f1e1;
 
-  .form_container { /* ... same as your current styles ... */ }
-  .logo_container { /* ... */ }
-  .logo_text { /* ... */ }
-  .title_container { /* ... */ }
-  .title { /* ... */ }
-  .subtitle { /* ... */ }
-  .input_container { /* ... */ }
-  .input_label { /* ... */ }
-  .input_field { /* ... */ }
-  .input_field:focus { /* ... */ }
-  .sign-in_btn { /* ... */ }
-  .sign-in_ggl { /* ... */ }
-  .sign-in_ggl:hover { /* ... */ }
-  .separator { /* ... */ }
-  .separator .line { /* ... */ }
-  .note { /* ... */ }
+  .form_container {
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #66371b;
+    text-align: center;
+    margin: 0;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    color: #81754b;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  input {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #e3d8c1;
+    outline: none;
+    font-size: 1rem;
+  }
+
+  input:focus {
+    border-color: #b4833d;
+  }
+
+  .btn {
+    background: #b4833d;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .btn.google {
+    background: #fff;
+    color: #66371b;
+    border: 1px solid #e3d8c1;
+  }
+
+  .separator {
+    text-align: center;
+    color: #81754b;
+    margin: 10px 0;
+  }
+
+  .note {
+    font-size: 0.85rem;
+    text-align: center;
+    color: #81754b;
+    a {
+      color: #66371b;
+      font-weight: 600;
+      text-decoration: none;
+    }
+  }
+
+  .error {
+    color: red;
+    font-size: 0.85rem;
+    text-align: center;
+  }
 `;
 
 export default LoginForm;
