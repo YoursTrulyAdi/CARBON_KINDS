@@ -16,6 +16,7 @@ import Orders from "./pages/Orders";
 import SellPage from "./pages/SellPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import WhyEcoFind from "./pages/WhyEcoFind";
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/sell" element={<SellPage />} />
-
+         <Route path="/why-ecofind" element={<WhyEcoFind />} />
         {/* Private Routes */}
         <Route
           path="/dashboard"

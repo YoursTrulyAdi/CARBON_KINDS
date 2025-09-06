@@ -6,6 +6,32 @@ import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
 import "./Browse.css";
 
+// Import all 10 SVGs
+import product1 from "../assets/product1.svg";
+import product2 from "../assets/product2.svg";
+import product3 from "../assets/product3.svg";
+import product4 from "../assets/product4.svg";
+import product5 from "../assets/product5.svg";
+import product6 from "../assets/product6.svg";
+import product7 from "../assets/product7.svg";
+import product8 from "../assets/product8.svg";
+import product9 from "../assets/product9.svg";
+import product10 from "../assets/product10.svg";
+
+// Map product.image key to actual imported SVG
+const productImages = {
+  product1,
+  product2,
+  product3,
+  product4,
+  product5,
+  product6,
+  product7,
+  product8,
+  product9,
+  product10,
+};
+
 const categories = [
   "All", "Electronics", "Furniture", "Clothing", "Books",
   "Home & Garden", "Sports", "Toys", "Other"
@@ -29,7 +55,10 @@ const Browse = () => {
   });
 
   return (
-    <div className="browse-page" style={{ backgroundColor: "#E3D8C1", minHeight: "100vh", padding: "20px" }}>
+    <div
+      className="browse-page"
+      style={{ backgroundColor: "#E3D8C1", minHeight: "100vh", padding: "20px" }}
+    >
       <h1 style={{ color: "#66371B" }}>Browse Products</h1>
 
       {/* Filters */}
@@ -76,14 +105,17 @@ const Browse = () => {
       </div>
 
       {/* Product List */}
-      <div className="product-list" style={{ display: "flex", flexWrap: "wrap", gap: "20px", marginTop: "20px" }}>
+      <div
+        className="product-list"
+        style={{ display: "flex", flexWrap: "wrap", gap: "20px", marginTop: "20px" }}
+      >
         {sorted.map((p) => (
           <Card
             key={p.id}
             title={p.title}
             price={p.price}
             rating={p.rating}
-            image={p.image}
+            image={productImages[p.image]} // pass actual SVG
             onAdd={() => addToCart(p)}
             onClick={() => navigate(`/product/${p.id}`)}
           />
