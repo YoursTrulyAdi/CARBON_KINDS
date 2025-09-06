@@ -21,10 +21,8 @@ A modern web application where users can **buy and sell products**, view their *
 ---
 
 ## 🛠️ Tech Stack
-- **Frontend:** React, React Router, TailwindCSS (or your CSS framework)  
-- **Backend:** Node.js, Express  
-- **Database:** MongoDB (Mongoose)  
-- **Authentication:** JWT  
+- **Frontend:** React, React Router, css, html
+- **Backend:** node.js, firebase
 
 ---
 
