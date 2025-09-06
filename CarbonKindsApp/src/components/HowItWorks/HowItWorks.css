@@ -1,0 +1,25 @@
+.how-it-works {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.step-card {
+  background-color: #E3D8C1;
+  padding: 1.5rem;
+  border-radius: 10px;
+  width: 250px;
+}
+
+.step-card .icon {
+  color: #B4833D;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
