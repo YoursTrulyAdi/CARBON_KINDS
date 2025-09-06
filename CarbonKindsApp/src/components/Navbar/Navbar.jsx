@@ -1,10 +1,10 @@
 // src/components/Navbar/Navbar.jsx
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import "./Navbar.css";
 import { useAuth } from "../../context/AuthContext";
 import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -27,7 +27,7 @@ const Navbar = () => {
           />
           <nav className={`nav-links ${mobileMenuOpen ? "open" : ""}`}>
             <Link to="/browse">Browse</Link>
-            <Link to="/about">Why EcoFinds?</Link>
+              <Link to="/why-ecofind">Why EcoFind</Link>
             <Link to="/sell">Sell</Link>
           </nav>
         </div>
