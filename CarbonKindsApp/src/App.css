@@ -2,3 +2,26 @@
     padding: 0;
     margin: 0;
 }
+
+/* Global Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica", sans-serif; /* apply Helvetica globally */
+  background-color: #F7F1E1; /* Old Lace */
+  color: #3F3F2C; /* Earth Green for text */
+}
+
+/* Headings globally use Helvetica Bold */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Helvetica", sans-serif;
+  font-weight: 700; /* Bold for headings */
+  color: #66371B; /* Kobicha for headings */
+}
+
+/* Paragraphs and normal text */
+p, span, a, li {
+  font-family: "Helvetica", sans-serif;
+  font-weight: 400; /* Regular */
+  color: #3F3F2C; /* Earth Green default */
+}
