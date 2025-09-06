@@ -1,0 +1,40 @@
+.browse-page {
+  padding: 20px 40px;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.category-buttons button {
+  margin-right: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #2ecc71;
+  background: white;
+  color: #2ecc71;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.category-buttons button.active,
+.category-buttons button:hover {
+  background: #2ecc71;
+  color: white;
+}
+
+.sort-dropdown select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}

@@ -1,23 +1,69 @@
+// src/App.jsx
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
+// Components
 import Navbar from "./components/Navbar/Navbar";
+import PrivateRoute from "./components/PrivateRoute";
+
+// Pages
 import Home from "./pages/Home";
 import Browse from "./pages/Browse";
-import Sell from "./pages/Sell";
-import LoginPage from "./pages/LoginPage"; 
+import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
+import Dashboard from "./pages/Dashboard";
+import Orders from "./pages/Orders";
+import SellPage from "./pages/SellPage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
-const App = () => {
+function App() {
   return (
-    <Router>
+    <>
+      {/* Navbar always visible */}
       <Navbar />
+
+      {/* App routes */}
       <Routes>
+        {/* Public Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/browse" element={<Browse />} />
-        <Route path="/sell" element={<Sell />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/sell" element={<SellPage />} />
+
+        {/* Private Routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <PrivateRoute>
+              <Cart />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <PrivateRoute>
+              <Orders />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Catch all: redirect unknown routes to Home */}
+        <Route path="*" element={<Home />} />
       </Routes>
-    </Router>
+    </>
   );
-};
+}
 
 export default App;

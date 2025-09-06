@@ -1,0 +1,42 @@
+/* src/pages/Browse.css */
+.browse-page {
+  padding: 20px;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-buttons button {
+  margin: 5px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #2ecc71;
+  background: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.category-buttons button.active,
+.category-buttons button:hover {
+  background: #2ecc71;
+  color: white;
+}
+
+.sort-dropdown select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
